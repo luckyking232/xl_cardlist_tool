@@ -103,16 +103,25 @@ const CARD_FILES = [
 ];
 
   // 背景图片列表
-  const BUILTIN_BACKGROUNDS = [
-    { name: '默认深色', type: 'color', value: '#1a1a2e' },
-    { name: 'bg1', type: 'image', file: './assets/bg/eventcovers_00.png' },
-    { name: 'bg2', type: 'image', file: './assets/bg/eventcovers_0028_bg2.png' },
-    { name: 'bg3', type: 'image', file: './assets/bg/eventcovers_0031.png' },
-    { name: 'bg4', type: 'image', file: './assets/bg/frame_250725173524_3a228f_100.png' },
-    { name: 'bg5', type: 'image', file: './assets/bg/frame_250815140809_0d3524_100.png' },
-    { name: 'bg6', type: 'image', file: './assets/bg/frame_251017103301_1c86e6_100.png' },
-    { name: 'bg7', type: 'image', file: './assets/bg/frame_251130230234_bf92ff_80.png' }
-  ];
+const BUILTIN_BACKGROUNDS = [
+  { name: '默认深色', type: 'color', value: '#1a1a2e' },
+  { name: 'bg1', type: 'image', file: './assets/bg/eventcovers_00.png' },
+  { name: 'bg2', type: 'image', file: './assets/bg/eventcovers_0028_bg2.png' },
+  { name: 'bg3', type: 'image', file: './assets/bg/eventcovers_0031.png' },
+  { name: 'bg4', type: 'image', file: './assets/bg/frame_250725173524_3a228f_100.png' },
+  { name: 'bg5', type: 'image', file: './assets/bg/frame_250815140809_0d3524_100.png' },
+  { name: 'bg6', type: 'image', file: './assets/bg/frame_251017103301_1c86e6_100.png' },
+  { name: 'bg7', type: 'image', file: './assets/bg/frame_251130230234_bf92ff_80.png' },
+  { name: 'bg8', type: 'image', file: './assets/bg/home2.mp4_000005.400.png' },
+  { name: 'bg9', type: 'image', file: './assets/bg/home2.mp4_000037.298.png' },
+  { name: 'bg10', type: 'image', file: './assets/bg/home2.mp4_000041.210.png' },
+  { name: 'bg11', type: 'image', file: './assets/bg/home2.mp4_000042.544.png' },
+  { name: 'bg12', type: 'image', file: './assets/bg/home2.mp4_000046.040.png' },
+  { name: 'bg13', type: 'image', file: './assets/bg/home2.mp4_000051.381.png' },
+  { name: 'bg14', type: 'image', file: './assets/bg/home2.mp4_000055.389.png' },
+  { name: 'bg15', type: 'image', file: './assets/bg/home2.mp4_000100.933.png' },
+  { name: 'bg16', type: 'image', file: './assets/bg/home2.mp4_000105.265.png' }
+];
 
   // 从文件名提取 CSV 对应 ID
   function getCsvIdFromFilename(filename) {
