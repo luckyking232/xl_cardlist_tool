@@ -7,7 +7,7 @@ BG_DIR = 'assets/bg'
 OUTPUT_FILE = 'assets/bg_list.json'
 
 # 获取所有 PNG 图片文件（按文件名排序）
-image_files = sorted(glob.glob(os.path.join(BG_DIR, '*.png')))
+image_files = sorted(glob.glob(os.path.join(BG_DIR, '*.webp')))
 
 # 提取纯文件名
 image_names = [os.path.basename(f) for f in image_files]
