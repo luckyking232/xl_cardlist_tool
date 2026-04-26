@@ -107,7 +107,7 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   // ===========================
-  // 以下代码保持不变（仅因依赖 cardItems，确保在 init() 中才渲染）
+  // 以下原有功能保持不变
 
   let tiers = [
     { name: '夯', bg: '#e33b2c', text: '#000' },
@@ -356,10 +356,14 @@ document.addEventListener('DOMContentLoaded', () => {
     currentTierIndex = -1;
   }
 
-  // ---------- 背景选择 ----------
-  function openBgPicker() {
+  // ---------- 背景选择（动态加载列表，支持远程更新）----------
+  async function openBgPicker() {
+    // 首次调用时加载背景列表
+    if (!bgListCache) {
+      bgListCache = await loadBgList();
+    }
     bgGrid.innerHTML = '';
-    BUILTIN_BACKGROUNDS.forEach((bg) => {
+    bgListCache.forEach((bg) => {
       const div = document.createElement('div');
       div.className = 'grid-item';
       if (bg.type === 'color') {
@@ -371,7 +375,7 @@ document.addEventListener('DOMContentLoaded', () => {
         div.appendChild(swatch);
       } else {
         const img = document.createElement('img');
-        img.src = bg.file;
+        img.src = BG_BASE + bg.file;   // 动态拼接背景图片路径
         img.alt = bg.name;
         div.appendChild(img);
       }
@@ -396,9 +400,20 @@ document.addEventListener('DOMContentLoaded', () => {
       body.style.backgroundColor = bg.value;
       body.classList.remove('has-bg');
     } else {
-      body.style.backgroundImage = `url(${bg.file})`;
-      body.style.backgroundColor = '';
-      body.classList.add('has-bg');
+      const url = BG_BASE + bg.file;
+      const img = new Image();
+      img.onload = () => {
+        body.style.backgroundImage = `url(${url})`;
+        body.style.backgroundColor = '';
+        body.classList.add('has-bg');
+      };
+      img.onerror = () => {
+        // 远程失败，回退本地
+        body.style.backgroundImage = `url(${LOCAL_BG_BASE}${bg.file})`;
+        body.style.backgroundColor = '';
+        body.classList.add('has-bg');
+      };
+      img.src = url;
     }
   }
 
@@ -527,9 +542,10 @@ function exportImage() {
   document.getElementById('cancelBgBtn').addEventListener('click', () => bgModal.hidden = true);
   document.querySelector('#bgModal .modal-backdrop').addEventListener('click', () => bgModal.hidden = true);
 
-  // ---------- 启动 ----------
+  // ---------- 页面初始化 ----------
   async function init() {
-    await loadCharacterData();      // 先加载数据
+    await loadCharacterData();      // 加载角色数据
+    // 背景列表在首次点击背景按钮时才加载，以减少启动时间
     initFilterButtons();
     renderTiers();
   }
