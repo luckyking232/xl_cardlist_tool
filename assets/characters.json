@@ -1,0 +1,688 @@
+[
+  {
+    "id": 10000101,
+    "name": "菲尼斯",
+    "star": 1,
+    "profession": "异刃",
+    "img": "HeadSquare_10000101.png"
+  },
+  {
+    "id": 10000102,
+    "name": "露露",
+    "star": 2,
+    "profession": "坚甲",
+    "img": "HeadSquare_10000102.png"
+  },
+  {
+    "id": 10000103,
+    "name": "奥菲利亚",
+    "star": 2,
+    "profession": "言灵",
+    "img": "HeadSquare_10000103.png"
+  },
+  {
+    "id": 10000104,
+    "name": "尼莉莎",
+    "star": 2,
+    "profession": "猎影",
+    "img": "HeadSquare_10000104.png"
+  },
+  {
+    "id": 10000105,
+    "name": "慈悲者",
+    "star": 3,
+    "profession": "坚甲",
+    "img": "HeadSquare_10000105.png"
+  },
+  {
+    "id": 10000106,
+    "name": "诺玛",
+    "star": 4,
+    "profession": "异刃",
+    "img": "HeadSquare_10000106.png"
+  },
+  {
+    "id": 10000107,
+    "name": "马尔可",
+    "star": 3,
+    "profession": "言灵",
+    "img": "HeadSquare_10000107.png"
+  },
+  {
+    "id": 10000108,
+    "name": "瓦莱沙",
+    "star": 3,
+    "profession": "猎影",
+    "img": "HeadSquare_10000108.png"
+  },
+  {
+    "id": 10000109,
+    "name": "烈风",
+    "star": 4,
+    "profession": "坚甲",
+    "img": "HeadSquare_10000109.png"
+  },
+  {
+    "id": 10000110,
+    "name": "罗宾",
+    "star": 4,
+    "profession": "坚甲",
+    "img": "HeadSquare_10000110.png"
+  },
+  {
+    "id": 10000111,
+    "name": "米哈尔",
+    "star": 4,
+    "profession": "异刃",
+    "img": "HeadSquare_10000111.png"
+  },
+  {
+    "id": 10000112,
+    "name": "鬼姬",
+    "star": 4,
+    "profession": "坚甲",
+    "img": "HeadSquare_10000112.png"
+  },
+  {
+    "id": 10000113,
+    "name": "汐",
+    "star": 4,
+    "profession": "言灵",
+    "img": "HeadSquare_10000113.png"
+  },
+  {
+    "id": 10000114,
+    "name": "狄莉丝",
+    "star": 4,
+    "profession": "猎影",
+    "img": "HeadSquare_10000114.png"
+  },
+  {
+    "id": 10000115,
+    "name": "炎狼",
+    "star": 5,
+    "profession": "异刃",
+    "img": "HeadSquare_10000115.png"
+  },
+  {
+    "id": 10000116,
+    "name": "薇",
+    "star": 5,
+    "profession": "言灵",
+    "img": "HeadSquare_10000116.png"
+  },
+  {
+    "id": 10000117,
+    "name": "芙蕾雅",
+    "star": 5,
+    "profession": "猎影",
+    "img": "HeadSquare_10000117.png"
+  },
+  {
+    "id": 10000118,
+    "name": "安妮斯",
+    "star": 1,
+    "profession": "言灵",
+    "img": "HeadSquare_10000118.png"
+  },
+  {
+    "id": 10000119,
+    "name": "茉莉",
+    "star": 2,
+    "profession": "坚甲",
+    "img": "HeadSquare_10000119.png"
+  },
+  {
+    "id": 10000120,
+    "name": "莱娜",
+    "star": 2,
+    "profession": "异刃",
+    "img": "HeadSquare_10000120.png"
+  },
+  {
+    "id": 10000121,
+    "name": "赛格丽特",
+    "star": 3,
+    "profession": "坚甲",
+    "img": "HeadSquare_10000121.png"
+  },
+  {
+    "id": 10000122,
+    "name": "艾米莉",
+    "star": 3,
+    "profession": "异刃",
+    "img": "HeadSquare_10000122.png"
+  },
+  {
+    "id": 10000124,
+    "name": "欧培拉",
+    "star": 3,
+    "profession": "猎影",
+    "img": "HeadSquare_10000124.png"
+  },
+  {
+    "id": 10000125,
+    "name": "卡莎",
+    "star": 4,
+    "profession": "坚甲",
+    "img": "HeadSquare_10000125.png"
+  },
+  {
+    "id": 10000126,
+    "name": "杰西卡",
+    "star": 4,
+    "profession": "坚甲",
+    "img": "HeadSquare_10000126.png"
+  },
+  {
+    "id": 10000127,
+    "name": "姬玛",
+    "star": 4,
+    "profession": "异刃",
+    "img": "HeadSquare_10000127.png"
+  },
+  {
+    "id": 10000128,
+    "name": "岚",
+    "star": 4,
+    "profession": "异刃",
+    "img": "HeadSquare_10000128.png"
+  },
+  {
+    "id": 10000129,
+    "name": "颂道使",
+    "star": 4,
+    "profession": "言灵",
+    "img": "HeadSquare_10000129.png"
+  },
+  {
+    "id": 10000130,
+    "name": "云雀",
+    "star": 4,
+    "profession": "猎影",
+    "img": "HeadSquare_10000130.png"
+  },
+  {
+    "id": 10000131,
+    "name": "辉夜",
+    "star": 5,
+    "profession": "坚甲",
+    "img": "HeadSquare_10000131.png"
+  },
+  {
+    "id": 10000132,
+    "name": "白鸢",
+    "star": 5,
+    "profession": "异刃",
+    "img": "HeadSquare_10000132.png"
+  },
+  {
+    "id": 10000133,
+    "name": "安伦",
+    "star": 5,
+    "profession": "言灵",
+    "img": "HeadSquare_10000133.png"
+  },
+  {
+    "id": 10000134,
+    "name": "蒂娜",
+    "star": 1,
+    "profession": "坚甲",
+    "img": "HeadSquare_10000134.png"
+  },
+  {
+    "id": 10000135,
+    "name": "露米娅",
+    "star": 2,
+    "profession": "异刃",
+    "img": "HeadSquare_10000135.png"
+  },
+  {
+    "id": 10000136,
+    "name": "苏西",
+    "star": 2,
+    "profession": "言灵",
+    "img": "HeadSquare_10000136.png"
+  },
+  {
+    "id": 10000137,
+    "name": "埃玛",
+    "star": 3,
+    "profession": "坚甲",
+    "img": "HeadSquare_10000137.png"
+  },
+  {
+    "id": 10000138,
+    "name": "朗姆",
+    "star": 3,
+    "profession": "异刃",
+    "img": "HeadSquare_10000138.png"
+  },
+  {
+    "id": 10000139,
+    "name": "弗拉克",
+    "star": 4,
+    "profession": "猎影",
+    "img": "HeadSquare_10000139.png"
+  },
+  {
+    "id": 10000140,
+    "name": "赛珂",
+    "star": 3,
+    "profession": "言灵",
+    "img": "HeadSquare_10000140.png"
+  },
+  {
+    "id": 10000141,
+    "name": "龙舌兰",
+    "star": 4,
+    "profession": "坚甲",
+    "img": "HeadSquare_10000141.png"
+  },
+  {
+    "id": 10000142,
+    "name": "莱克西",
+    "star": 4,
+    "profession": "异刃",
+    "img": "HeadSquare_10000142.png"
+  },
+  {
+    "id": 10000143,
+    "name": "赦罪人",
+    "star": 4,
+    "profession": "异刃",
+    "img": "HeadSquare_10000143.png"
+  },
+  {
+    "id": 10000145,
+    "name": "星云",
+    "star": 4,
+    "profession": "言灵",
+    "img": "HeadSquare_10000145.png"
+  },
+  {
+    "id": 10000146,
+    "name": "岫",
+    "star": 4,
+    "profession": "猎影",
+    "img": "HeadSquare_10000146.png"
+  },
+  {
+    "id": 10000147,
+    "name": "猎鹰",
+    "star": 5,
+    "profession": "坚甲",
+    "img": "HeadSquare_10000147.png"
+  },
+  {
+    "id": 10000148,
+    "name": "舒芙蕾",
+    "star": 5,
+    "profession": "言灵",
+    "img": "HeadSquare_10000148.png"
+  },
+  {
+    "id": 10000149,
+    "name": "缇米",
+    "star": 5,
+    "profession": "猎影",
+    "img": "HeadSquare_10000149.png"
+  },
+  {
+    "id": 10000150,
+    "name": "海蒂",
+    "star": 2,
+    "profession": "异刃",
+    "img": "HeadSquare_10000150.png"
+  },
+  {
+    "id": 10000151,
+    "name": "莫妮卡",
+    "star": 4,
+    "profession": "异刃",
+    "img": "HeadSquare_10000151.png"
+  },
+  {
+    "id": 10000152,
+    "name": "艾莉亚",
+    "star": 4,
+    "profession": "坚甲",
+    "img": "HeadSquare_10000152.png"
+  },
+  {
+    "id": 10000153,
+    "name": "希尔",
+    "star": 2,
+    "profession": "猎影",
+    "img": "HeadSquare_10000153.png"
+  },
+  {
+    "id": 10000154,
+    "name": "月蚀",
+    "star": 3,
+    "profession": "异刃",
+    "img": "HeadSquare_10000154.png"
+  },
+  {
+    "id": 10000155,
+    "name": "鬼魅",
+    "star": 4,
+    "profession": "言灵",
+    "img": "HeadSquare_10000155.png"
+  },
+  {
+    "id": 10000156,
+    "name": "罗亚",
+    "star": 5,
+    "profession": "坚甲",
+    "img": "HeadSquare_10000156.png"
+  },
+  {
+    "id": 10000159,
+    "name": "蒙娜",
+    "star": 4,
+    "profession": "言灵",
+    "img": "HeadSquare_10000159.png"
+  },
+  {
+    "id": 10000160,
+    "name": "米亚姆",
+    "star": 5,
+    "profession": "猎影",
+    "img": "HeadSquare_10000160.png"
+  },
+  {
+    "id": 10000161,
+    "name": "黑羽",
+    "star": 5,
+    "profession": "异刃",
+    "img": "HeadSquare_10000161.png"
+  },
+  {
+    "id": 10000162,
+    "name": "灵遥",
+    "star": 5,
+    "profession": "猎影",
+    "img": "HeadSquare_10000162.png"
+  },
+  {
+    "id": 10000164,
+    "name": "菲莉亚",
+    "star": 5,
+    "profession": "言灵",
+    "img": "HeadSquare_10000164.png"
+  },
+  {
+    "id": 10000167,
+    "name": "尼基塔",
+    "star": 5,
+    "profession": "坚甲",
+    "img": "HeadSquare_10000167.png"
+  },
+  {
+    "id": 10000169,
+    "name": "阿斯特莉亚",
+    "star": 5,
+    "profession": "言灵",
+    "img": "HeadSquare_10000169.png"
+  },
+  {
+    "id": 10000170,
+    "name": "伊涅利丝",
+    "star": 5,
+    "profession": "猎影",
+    "img": "HeadSquare_10000170.png"
+  },
+  {
+    "id": 10000171,
+    "name": "圣光使",
+    "star": 5,
+    "profession": "坚甲",
+    "img": "HeadSquare_10000171.png"
+  },
+  {
+    "id": 10000173,
+    "name": "抚慰师",
+    "star": 5,
+    "profession": "言灵",
+    "img": "HeadSquare_10000173.png"
+  },
+  {
+    "id": 10000174,
+    "name": "司礼者",
+    "star": 5,
+    "profession": "言灵",
+    "img": "HeadSquare_10000174.png"
+  },
+  {
+    "id": 10000175,
+    "name": "永夜",
+    "star": 5,
+    "profession": "坚甲",
+    "img": "HeadSquare_10000175.png"
+  },
+  {
+    "id": 10000176,
+    "name": "玛德莲",
+    "star": 5,
+    "profession": "坚甲",
+    "img": "HeadSquare_10000176.png"
+  },
+  {
+    "id": 10000177,
+    "name": "渡鸦",
+    "star": 5,
+    "profession": "猎影",
+    "img": "HeadSquare_10000177.png"
+  },
+  {
+    "id": 10000178,
+    "name": "夜莺",
+    "star": 4,
+    "profession": "言灵",
+    "img": "HeadSquare_10000178.png"
+  },
+  {
+    "id": 10000180,
+    "name": "鬼侍",
+    "star": 5,
+    "profession": "坚甲",
+    "img": "HeadSquare_10000180.png"
+  },
+  {
+    "id": 10000182,
+    "name": "蕾米",
+    "star": 4,
+    "profession": "坚甲",
+    "img": "HeadSquare_10000182.png"
+  },
+  {
+    "id": 10000183,
+    "name": "云罗",
+    "star": 5,
+    "profession": "猎影",
+    "img": "HeadSquare_10000183.png"
+  },
+  {
+    "id": 10000186,
+    "name": "鬼王",
+    "star": 5,
+    "profession": "言灵",
+    "img": "HeadSquare_10000186.png"
+  },
+  {
+    "id": 10000189,
+    "name": "埃斯特拉",
+    "star": 5,
+    "profession": "异刃",
+    "img": "HeadSquare_10000189.png"
+  },
+  {
+    "id": 10000191,
+    "name": "威士忌",
+    "star": 4,
+    "profession": "猎影",
+    "img": "HeadSquare_10000191.png"
+  },
+  {
+    "id": 10000193,
+    "name": "湄",
+    "star": 4,
+    "profession": "坚甲",
+    "img": "HeadSquare_10000193.png"
+  },
+  {
+    "id": 10000194,
+    "name": "霏",
+    "star": 5,
+    "profession": "异刃",
+    "img": "HeadSquare_10000194.png"
+  },
+  {
+    "id": 10000195,
+    "name": "艾瑟儿",
+    "star": 5,
+    "profession": "异刃",
+    "img": "HeadSquare_10000195.png"
+  },
+  {
+    "id": 10000196,
+    "name": "莉娃",
+    "star": 4,
+    "profession": "言灵",
+    "img": "HeadSquare_10000196.png"
+  },
+  {
+    "id": 10000197,
+    "name": "奥萨丁",
+    "star": 5,
+    "profession": "坚甲",
+    "img": "HeadSquare_10000197.png"
+  },
+  {
+    "id": 10000198,
+    "name": "列蒂西雅",
+    "star": 5,
+    "profession": "异刃",
+    "img": "HeadSquare_10000198.png"
+  },
+  {
+    "id": 10000199,
+    "name": "雪拉シェラ",
+    "star": 5,
+    "profession": "猎影",
+    "img": "HeadSquare_10000199.png"
+  },
+  {
+    "id": 10000200,
+    "name": "蕾姆レム",
+    "star": 5,
+    "profession": "异刃",
+    "img": "HeadSquare_10000200.png"
+  },
+  {
+    "id": 10000201,
+    "name": "枭",
+    "star": 5,
+    "profession": "猎影",
+    "img": "HeadSquare_10000201.png"
+  },
+  {
+    "id": 10000202,
+    "name": "蕾妮希雅",
+    "star": 5,
+    "profession": "言灵",
+    "img": "HeadSquare_10000202.png"
+  },
+  {
+    "id": 10000203,
+    "name": "守护者",
+    "star": 5,
+    "profession": "异刃",
+    "img": "HeadSquare_10000203.png"
+  },
+  {
+    "id": 10000204,
+    "name": "拉斯特",
+    "star": 5,
+    "profession": "猎影",
+    "img": "HeadSquare_10000204.png"
+  },
+  {
+    "id": 10000205,
+    "name": "伊莎贝尔",
+    "star": 5,
+    "profession": "坚甲",
+    "img": "HeadSquare_10000205.png"
+  },
+  {
+    "id": 10000206,
+    "name": "艾拉",
+    "star": 5,
+    "profession": "异刃",
+    "img": "HeadSquare_10000206.png"
+  },
+  {
+    "id": 10000207,
+    "name": "星轨",
+    "star": 5,
+    "profession": "言灵",
+    "img": "HeadSquare_10000207.png"
+  },
+  {
+    "id": 10000208,
+    "name": "风痕",
+    "star": 4,
+    "profession": "猎影",
+    "img": "HeadSquare_10000208.png"
+  },
+  {
+    "id": 10000209,
+    "name": "燧影",
+    "star": 5,
+    "profession": "猎影",
+    "img": "HeadSquare_10000209.png"
+  },
+  {
+    "id": 10000210,
+    "name": "安瑞丝",
+    "star": 5,
+    "profession": "言灵",
+    "img": "HeadSquare_10000210.png"
+  },
+  {
+    "id": 10000211,
+    "name": "谢利",
+    "star": 5,
+    "profession": "猎影",
+    "img": "HeadSquare_10000211.png"
+  },
+  {
+    "id": 10000212,
+    "name": "雪莉",
+    "star": 5,
+    "profession": "言灵",
+    "img": "HeadSquare_10000212.png"
+  },
+  {
+    "id": 10000213,
+    "name": "尤娜",
+    "star": 4,
+    "profession": "坚甲",
+    "img": "HeadSquare_10000213.png"
+  },
+  {
+    "id": 10000214,
+    "name": "朝雾",
+    "star": 5,
+    "profession": "异刃",
+    "img": "HeadSquare_10000214.png"
+  },
+  {
+    "id": 10000215,
+    "name": "鎺",
+    "star": 5,
+    "profession": "坚甲",
+    "img": "HeadSquare_10000215.png"
+  }
+]
