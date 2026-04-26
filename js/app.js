@@ -1,106 +1,55 @@
-// ===== 版本切换开关 =====
-// 在线版（部署到 Cloudflare Pages 时使用）：true
-// 本地版（打包成 ZIP 提交 TapTap 时使用）：false
-const USE_REMOTE = false;   // <--- 这里改 true/false 即可切换版本
-
 document.addEventListener('DOMContentLoaded', () => {
   // ===========================
-  // 根据 USE_REMOTE 自动设置所有资源路径
-  const REMOTE_BASE = 'https://xl-cardlist-tool.2609113802.workers.dev'; // 你的 Cloudflare Pages 地址
-  const LOCAL_BASE = '.';
+  // 本地数据加载（独立于代码）
+  const JSON_CHARACTERS = './assets/characters.json';
+  const JSON_BG_LIST = './assets/bg_list.json';
+  const STORAGE_KEY = 'tierlist_save';   // localStorage 键名
 
-  const DATA_URL = USE_REMOTE
-    ? `${REMOTE_BASE}/assets/characters.json`
-    : `${LOCAL_BASE}/assets/characters.json`;
-
-  const IMG_BASE = USE_REMOTE
-    ? `${REMOTE_BASE}/assets/card/`
-    : `${LOCAL_BASE}/assets/card/`;
-
-  const BG_LIST_URL = USE_REMOTE
-    ? `${REMOTE_BASE}/assets/bg_list.json`
-    : `${LOCAL_BASE}/assets/bg_list.json`;
-
-  const BG_BASE = USE_REMOTE
-    ? `${REMOTE_BASE}/assets/bg/`
-    : `${LOCAL_BASE}/assets/bg/`;
-
-  // 注意: 不再需要 local/remote 两套常量，已统一为上面的变量
-
-  // 本地兜底数据（ZIP 中包含完整的 assets/characters.json 即可，此处为保险最小集）
-  const FALLBACK_DATA = [
-    { id: 10000101, name: '菲尼斯', star: 1, profession: '异刃', element: '火属性', img: 'HeadSquare_10000101.png' },
-    { id: 10000102, name: '露露', star: 2, profession: '坚甲', element: '火属性', img: 'HeadSquare_10000102.png' }
-  ];
-
-  // 内置最少背景兜底（极端情况）
-  const FALLBACK_BG_LIST = [
-    { name: '默认深色', type: 'color', value: '#1a1a2e' },
-    { name: '内置背景1', type: 'image', file: 'eventcovers_00.png' }
-  ];
-
-  let characterMap = {};   // id -> 完整角色信息
-  let cardItems = [];      // 最终用于显示的卡片列表
+  let characterMap = {};   // id -> 角色信息
+  let cardItems = [];      // 用于显示的卡片列表
+  let bgListData = [];     // 背景列表数据
 
   // ---------- 加载角色数据 ----------
   async function loadCharacterData() {
-    let data = null;
-
-    // 优先从 DATA_URL 加载（本地版则直接走本地文件）
     try {
-      const resp = await fetch(DATA_URL + '?t=' + Date.now());
-      if (resp.ok) {
-        data = await resp.json();
-        console.log('✅ 角色数据加载成功，使用路径:', DATA_URL);
-      }
+      const resp = await fetch(JSON_CHARACTERS);
+      if (!resp.ok) throw new Error('无法加载角色数据');
+      const data = await resp.json();
+      data.forEach(ch => {
+        characterMap[ch.id] = ch;
+      });
+      cardItems = data.map(ch => ({
+        id: ch.id,
+        file: './assets/card/' + ch.img,
+        name: ch.name,
+        star: ch.star,
+        profession: ch.profession,
+        element: ch.element || ''
+      }));
+      console.log(`✅ 加载了 ${cardItems.length} 个角色`);
     } catch (e) {
-      console.warn('⚠️ 角色数据加载失败，尝试内置兜底', e);
+      console.error('角色数据加载失败', e);
+      cardItems = [];
     }
-
-    if (!data) {
-      data = FALLBACK_DATA;
-      console.warn('⚠️ 使用内置最小角色数据集');
-    }
-
-    // 构建 characterMap 和 cardItems
-    characterMap = {};
-    data.forEach(ch => {
-      characterMap[ch.id] = ch;
-    });
-
-    cardItems = data.map(ch => ({
-      id: ch.id,
-      file: IMG_BASE + ch.img,   // 完整图片路径（本地或远程）
-      name: ch.name,
-      star: ch.star,
-      profession: ch.profession,
-      element: ch.element || ''
-    }));
-
-    console.log(`共加载 ${cardItems.length} 个角色`);
   }
 
   // ---------- 加载背景列表 ----------
-  let bgListCache = null;
-
-// ✅ 正确做法：使用根据版本切换的全局变量 BG_LIST_URL
-async function loadBgList() {
+  async function loadBgList() {
     try {
-        const resp = await fetch(BG_LIST_URL + '?t=' + Date.now());
-        if (resp.ok) {
-            const list = await resp.json();
-            console.log('✅ 背景列表加载成功，共', list.length, '个，使用路径:', BG_LIST_URL);
-            return list;
-        }
-    } catch (e) { console.warn('背景列表加载失败', e); }
-
-    console.warn('⚠️ 使用内置背景兜底');
-    return FALLBACK_BG_LIST;
-}
+      const resp = await fetch(JSON_BG_LIST);
+      if (!resp.ok) throw new Error('无法加载背景列表');
+      bgListData = await resp.json();
+      console.log(`✅ 加载了 ${bgListData.length} 个背景`);
+    } catch (e) {
+      console.error('背景列表加载失败', e);
+      bgListData = [
+        { name: '默认深色', type: 'color', value: '#1a1a2e' }
+      ];
+    }
+  }
 
   // ===========================
-  // 以下原有功能保持不变
-
+  // 等级行定义
   let tiers = [
     { name: '夯', bg: '#e33b2c', text: '#000' },
     { name: '顶级', bg: '#f1ca4d', text: '#000' },
@@ -109,6 +58,9 @@ async function loadBgList() {
     { name: '拉完了', bg: '#fafaf8', text: '#000' }
   ];
 
+  // 当前背景信息（用于保存）
+  let currentBackground = { name: '默认深色', type: 'color', value: '#1a1a2e' };
+
   const tierContainer = document.getElementById('tierContainer');
   const pickerModal = document.getElementById('pickerModal');
   const editTierModal = document.getElementById('editTierModal');
@@ -116,52 +68,277 @@ async function loadBgList() {
   const imageGrid = document.getElementById('imageGrid');
   const bgGrid = document.getElementById('bgGrid');
   const exportBtn = document.getElementById('exportBtn');
+  const saveBtn = document.getElementById('saveBtn');
+  const exportSaveBtn = document.getElementById('exportSaveBtn');
+  const importSaveBtn = document.getElementById('importSaveBtn');
+  const importFileInput = document.getElementById('importFile');
 
   let currentTierIndex = -1;
   let selectedImages = new Set();
 
-  // 筛选条件（多选集合）
+  // 筛选条件
   let currentFilter = {
     stars: new Set(),
     professions: new Set(),
     elements: new Set()
   };
 
-  // ---------- 渲染等级行 ----------
-  function renderTiers() {
+  let bgViewSize = 'medium';
+
+  // ===========================
+  // 序列化 / 反序列化当前排榜状态
+  // ===========================
+  function serializeState() {
+    const tiersState = tiers.map((tier, index) => {
+      const container = document.querySelector(`.tier-items[data-tier-index="${index}"]`);
+      const cards = [];
+      if (container) {
+        container.querySelectorAll('.tier-card').forEach(card => {
+          const name = card.getAttribute('data-name');
+          // 通过 name 找到对应的角色 id（name 是唯一的吗？保险起见用 id 查找）
+          const item = cardItems.find(c => c.name === name);
+          if (item) {
+            cards.push(item.id);
+          } else {
+            // 降级：直接存名字（可能性极低，仅容错）
+            cards.push({ name: name, file: card.querySelector('img')?.src || '' });
+          }
+        });
+      }
+      return {
+        name: tier.name,
+        bg: tier.bg,
+        text: tier.text,
+        cards: cards
+      };
+    });
+    return {
+      tiers: tiersState,
+      background: currentBackground
+    };
+  }
+
+  function deserializeState(state) {
+    if (!state || !state.tiers) return false;
+    try {
+      // 恢复背景
+      if (state.background) {
+        const bg = bgListData.find(b => b.name === state.background.name);
+        if (bg) {
+          applyBackground(bg, false); // 不保存到历史
+          currentBackground = state.background;
+        } else {
+          // 如果背景列表中没有，尝试直接使用保存的值
+          const savedBg = state.background;
+          if (savedBg.type === 'color') {
+            applyBackground(savedBg, false);
+            currentBackground = savedBg;
+          } else {
+            // 图片背景可能文件已丢失，回退默认
+            applyBackground({ name: '默认深色', type: 'color', value: '#1a1a2e' }, false);
+            currentBackground = { name: '默认深色', type: 'color', value: '#1a1a2e' };
+          }
+        }
+      }
+
+      // 恢复等级行和卡片
+      tiers = state.tiers.map(t => ({
+        name: t.name,
+        bg: t.bg,
+        text: t.text
+      }));
+      fullRenderTiers();
+
+      // 等待 DOM 更新后添加卡片
+      requestAnimationFrame(() => {
+        state.tiers.forEach((tierData, index) => {
+          const container = document.querySelector(`.tier-items[data-tier-index="${index}"]`);
+          if (!container) return;
+          tierData.cards.forEach(cardId => {
+            // cardId 可能是数字(角色id) 或字符串(只存了名字，容错)
+            let item;
+            if (typeof cardId === 'number') {
+              item = cardItems.find(c => c.id === cardId);
+            } else if (typeof cardId === 'string' && cardId.includes('HeadSquare')) {
+              // 直接是文件名？容错处理
+              item = cardItems.find(c => c.file.includes(cardId));
+            } else {
+              item = cardItems.find(c => c.name === cardId);
+            }
+            if (item) {
+              const card = createImageCard(item.name, item.file);
+              container.appendChild(card);
+            }
+          });
+        });
+      });
+      return true;
+    } catch (e) {
+      console.error('恢复进度失败', e);
+      return false;
+    }
+  }
+
+  // ===========================
+  // 自动保存到 localStorage
+  // ===========================
+  function autoSave() {
+    const state = serializeState();
+    try {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+      console.log('✅ 进度已自动保存');
+    } catch (e) {
+      console.warn('⚠️ 保存失败（可能存储空间不足）', e);
+    }
+  }
+
+  // 手动保存按钮（也是覆盖自动保存的同一个 key）
+  function manualSave() {
+    const state = serializeState();
+    try {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+      alert('进度已保存！下次打开将自动恢复。');
+    } catch (e) {
+      alert('保存失败，请尝试导出进度文件备份。');
+    }
+  }
+
+  function loadFromLocal() {
+    const raw = localStorage.getItem(STORAGE_KEY);
+    if (!raw) return false;
+    try {
+      const state = JSON.parse(raw);
+      if (deserializeState(state)) {
+        console.log('✅ 已从本地存储恢复进度');
+        return true;
+      }
+    } catch (e) {}
+    return false;
+  }
+
+  // ===========================
+  // 导入 / 导出进度文件
+  // ===========================
+  function exportProgressFile() {
+    const state = serializeState();
+    const blob = new Blob([JSON.stringify(state, null, 2)], { type: 'application/json' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = 'tierlist_backup.json';
+    a.click();
+    URL.revokeObjectURL(url);
+  }
+
+  function handleImportFile(event) {
+    const file = event.target.files[0];
+    if (!file) return;
+    const reader = new FileReader();
+    reader.onload = (e) => {
+      try {
+        const state = JSON.parse(e.target.result);
+        if (deserializeState(state)) {
+          alert('导入成功！进度已恢复。');
+          autoSave(); // 同时保存到 localStorage
+        } else {
+          alert('文件格式不正确或角色数据不匹配。');
+        }
+      } catch (err) {
+        alert('文件解析失败，请选择有效的 JSON 文件。');
+      }
+    };
+    reader.readAsText(file);
+    importFileInput.value = ''; // 清空以便再次选择同一文件
+  }
+
+  // ===========================
+  // 以下为原有核心逻辑（修改了部分以支持自动保存）
+  // ===========================
+
+  function getRowIndex(row) {
+    const rows = [...tierContainer.querySelectorAll('.tier-row')];
+    return rows.indexOf(row);
+  }
+
+  function createTierRow(tier, index) {
+    const row = document.createElement('div');
+    row.className = 'tier-row';
+
+    const label = document.createElement('div');
+    label.className = 'tier-label';
+    label.style.backgroundColor = tier.bg;
+    label.style.color = tier.text;
+    label.textContent = tier.name;
+
+    const delBtn = document.createElement('span');
+    delBtn.className = 'del-tier-btn';
+    delBtn.textContent = '×';
+    delBtn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      deleteRow(row);
+    });
+    label.appendChild(delBtn);
+
+    const items = document.createElement('div');
+    items.className = 'tier-items';
+    items.setAttribute('data-tier-index', index);
+
+    row.appendChild(label);
+    row.appendChild(items);
+
+    // 拖拽排序，并在结束后自动保存
+    new Sortable(items, {
+      group: 'shared',
+      animation: 150,
+      draggable: '.tier-card',
+      ghostClass: 'sortable-ghost',
+      onEnd: function () {
+        autoSave();
+      }
+    });
+
+    return row;
+  }
+
+  function deleteRow(row) {
+    const index = getRowIndex(row);
+    if (index < 0) return;
+    row.remove();
+    tiers.splice(index, 1);
+    tierContainer.querySelectorAll('.tier-row').forEach((r, i) => {
+      const items = r.querySelector('.tier-items');
+      if (items) {
+        items.setAttribute('data-tier-index', i);
+      }
+    });
+    autoSave();
+  }
+
+  function fullRenderTiers() {
     tierContainer.innerHTML = '';
     tiers.forEach((tier, index) => {
-      const row = document.createElement('div');
-      row.className = 'tier-row';
-
-      const label = document.createElement('div');
-      label.className = 'tier-label';
-      label.style.backgroundColor = tier.bg;
-      label.style.color = tier.text;
-      label.textContent = tier.name;
-      label.addEventListener('click', () => openEditTierModal(index));
-
-      const items = document.createElement('div');
-      items.className = 'tier-items';
-      items.setAttribute('data-tier-index', index);
-      items.addEventListener('click', (e) => {
-        if (e.target === items) openPicker(index);
-      });
-
-      row.appendChild(label);
-      row.appendChild(items);
-      tierContainer.appendChild(row);
-
-      new Sortable(items, {
-        group: 'shared',
-        animation: 150,
-        draggable: '.tier-card',
-        ghostClass: 'sortable-ghost',
-      });
+      tierContainer.appendChild(createTierRow(tier, index));
     });
   }
 
-  // ---------- 创建卡片 ----------
+  // 事件委托
+  tierContainer.addEventListener('click', (e) => {
+    const label = e.target.closest('.tier-label');
+    if (label) {
+      if (e.target.classList.contains('del-tier-btn')) return;
+      const row = label.closest('.tier-row');
+      const index = getRowIndex(row);
+      if (index >= 0) openEditTierModal(index);
+      return;
+    }
+
+    const items = e.target.closest('.tier-items');
+    if (items && e.target === items) {
+      const index = parseInt(items.getAttribute('data-tier-index'), 10);
+      if (!isNaN(index)) openPicker(index);
+    }
+  });
+
   function createImageCard(name, imgSrc) {
     const card = document.createElement('div');
     card.className = 'tier-card';
@@ -179,12 +356,12 @@ async function loadBgList() {
     delBtn.addEventListener('click', (e) => {
       e.stopPropagation();
       card.remove();
+      autoSave();
     });
     card.appendChild(delBtn);
     return card;
   }
 
-  // ---------- 图片选择弹窗 ----------
   function openPicker(tierIndex) {
     currentTierIndex = tierIndex;
     selectedImages.clear();
@@ -192,7 +369,6 @@ async function loadBgList() {
     pickerModal.hidden = false;
   }
 
-  // 多选过滤函数
   function getFilteredItems() {
     return cardItems
       .filter(item => {
@@ -243,9 +419,9 @@ async function loadBgList() {
     pickerModal.hidden = true;
     currentTierIndex = -1;
     selectedImages.clear();
+    autoSave();
   }
 
-  // ---------- 多选筛选按钮 ----------
   function initFilterButtons() {
     const starsGroup = document.getElementById('filterStars');
     const profsGroup = document.getElementById('filterProfs');
@@ -254,11 +430,10 @@ async function loadBgList() {
     for (let i = 1; i <= 5; i++) {
       const btn = document.createElement('button');
       btn.className = 'filter-btn';
-      btn.textContent = '⭐'+i;
+      btn.textContent = '⭐' + i;
       btn.addEventListener('click', () => {
         const set = currentFilter.stars;
-        if (set.has(i)) { set.delete(i); }
-        else { set.add(i); }
+        set.has(i) ? set.delete(i) : set.add(i);
         updateFilterButtonStates();
         renderImageGrid();
       });
@@ -271,8 +446,7 @@ async function loadBgList() {
       btn.textContent = prof;
       btn.addEventListener('click', () => {
         const set = currentFilter.professions;
-        if (set.has(prof)) { set.delete(prof); }
-        else { set.add(prof); }
+        set.has(prof) ? set.delete(prof) : set.add(prof);
         updateFilterButtonStates();
         renderImageGrid();
       });
@@ -285,8 +459,7 @@ async function loadBgList() {
       btn.textContent = elem;
       btn.addEventListener('click', () => {
         const set = currentFilter.elements;
-        if (set.has(elem)) { set.delete(elem); }
-        else { set.add(elem); }
+        set.has(elem) ? set.delete(elem) : set.add(elem);
         updateFilterButtonStates();
         renderImageGrid();
       });
@@ -315,8 +488,8 @@ async function loadBgList() {
     });
   }
 
-  // ---------- 编辑等级行弹窗 ----------
   function openEditTierModal(index) {
+    if (index < 0 || index >= tiers.length) return;
     currentTierIndex = index;
     const tier = tiers[index];
     document.getElementById('editName').value = tier.name;
@@ -330,30 +503,44 @@ async function loadBgList() {
     tiers[currentTierIndex].name = document.getElementById('editName').value;
     tiers[currentTierIndex].bg = document.getElementById('editBgColor').value;
     tiers[currentTierIndex].text = document.getElementById('editTextColor').value;
-    renderTiers();
+    const label = document.querySelector(`.tier-row:nth-child(${currentTierIndex + 1}) .tier-label`);
+    if (label) {
+      const delBtn = label.querySelector('.del-tier-btn');
+      label.childNodes.forEach(child => {
+        if (child.nodeType === 3) label.removeChild(child);
+      });
+      label.prepend(document.createTextNode(tiers[currentTierIndex].name));
+      label.style.backgroundColor = tiers[currentTierIndex].bg;
+      label.style.color = tiers[currentTierIndex].text;
+      if (delBtn) label.appendChild(delBtn);
+    }
     editTierModal.hidden = true;
     currentTierIndex = -1;
+    autoSave();
   }
 
-  // ---------- 背景选择 ----------
   async function openBgPicker() {
-    if (!bgListCache) {
-      bgListCache = await loadBgList();
+    if (bgListData.length === 0) {
+      await loadBgList();
     }
+    renderBgGrid();
+    bgModal.hidden = false;
+  }
+
+  function renderBgGrid() {
     bgGrid.innerHTML = '';
-    bgListCache.forEach((bg) => {
+    bgGrid.className = 'image-grid view-' + bgViewSize;
+    bgListData.forEach((bg) => {
       const div = document.createElement('div');
       div.className = 'grid-item';
       if (bg.type === 'color') {
         const swatch = document.createElement('div');
-        swatch.style.width = '80px';
-        swatch.style.height = '140px';
+        swatch.className = 'color-swatch';
         swatch.style.backgroundColor = bg.value;
-        swatch.style.borderRadius = '8px';
         div.appendChild(swatch);
       } else {
         const img = document.createElement('img');
-        img.src = BG_BASE + bg.file;   // 动态拼接背景图片路径
+        img.src = './assets/bg/' + bg.file;
         img.alt = bg.name;
         div.appendChild(img);
       }
@@ -363,35 +550,41 @@ async function loadBgList() {
       div.appendChild(nameSpan);
 
       div.addEventListener('click', () => {
-        applyBackground(bg);
+        applyBackground(bg, true);
         bgModal.hidden = true;
       });
       bgGrid.appendChild(div);
     });
-    bgModal.hidden = false;
   }
 
-function applyBackground(bg) {
-  const body = document.body;
-  if (bg.type === 'color') {
-    body.style.backgroundImage = 'none';
-    body.style.backgroundColor = bg.value;
-    body.classList.remove('has-bg');
-  } else {
-    // 直接使用 BG_BASE 拼接路径，不进行异步加载检测
-    const url = BG_BASE + bg.file;
-    body.style.backgroundImage = `url(${url})`;
-    body.style.backgroundColor = '';
-    body.classList.add('has-bg');
+  function applyBackground(bg, save = true) {
+    const body = document.body;
+    if (bg.type === 'color') {
+      body.style.backgroundImage = 'none';
+      body.style.backgroundColor = bg.value;
+      body.classList.remove('has-bg');
+    } else {
+      body.style.backgroundImage = `url(./assets/bg/${bg.file})`;
+      body.style.backgroundColor = '';
+      body.classList.add('has-bg');
+    }
+    currentBackground = { name: bg.name, type: bg.type, value: bg.value, file: bg.file };
+    if (save) autoSave();
   }
-}
 
   function resetBackground() {
-    applyBackground({ type: 'color', value: '#1a1a2e' });
+    applyBackground({ name: '默认深色', type: 'color', value: '#1a1a2e' }, true);
     bgModal.hidden = true;
   }
 
-  // ---------- 导出图片 ----------
+  function setBgViewSize(size) {
+    bgViewSize = size;
+    document.querySelectorAll('.view-toggle button').forEach(btn => {
+      btn.classList.toggle('active', btn.dataset.size === size);
+    });
+    renderBgGrid();
+  }
+
   function exportImage() {
     if (typeof html2canvas === 'undefined') {
       alert('导出库未加载，请检查 html2canvas.js 引入');
@@ -402,6 +595,13 @@ function applyBackground(bg) {
     const originalText = btn.textContent;
     btn.textContent = '⏳ 导出中…';
     btn.disabled = true;
+
+    const toolbar = document.querySelector('.toolbar');
+    const tips = document.querySelector('.tips');
+    const origToolbarDisplay = toolbar.style.display;
+    const origTipsDisplay = tips.style.display;
+    toolbar.style.display = 'none';
+    tips.style.display = 'none';
 
     const appEl = document.getElementById('app');
     const bodyStyles = window.getComputedStyle(document.body);
@@ -452,6 +652,8 @@ function applyBackground(bg) {
       console.error(err);
       alert('导出失败：请通过本地服务器打开（例如 Live Server），或上传至 TapTap 后使用。');
     }).finally(() => {
+      toolbar.style.display = origToolbarDisplay;
+      tips.style.display = origTipsDisplay;
       appEl.style.background = origBg;
       appEl.style.backgroundImage = origBgImage;
       const overlay = document.getElementById('__export_overlay__');
@@ -461,11 +663,15 @@ function applyBackground(bg) {
     });
   }
 
-  // ---------- 事件绑定 ----------
+  // ========== 事件绑定 ==========
   document.getElementById('addTierBtn').addEventListener('click', () => {
-    tiers.push({ name: '新等级', bg: '#999', text: '#fff' });
-    renderTiers();
+    const newTier = { name: '新等级', bg: '#999', text: '#fff' };
+    const newIndex = tiers.length;
+    tiers.push(newTier);
+    tierContainer.appendChild(createTierRow(newTier, newIndex));
+    autoSave();
   });
+
   document.getElementById('resetBtn').addEventListener('click', () => {
     tiers = [
       { name: '夯', bg: '#e33b2c', text: '#000' },
@@ -474,8 +680,11 @@ function applyBackground(bg) {
       { name: 'NPC', bg: '#f9f3d0', text: '#000' },
       { name: '拉完了', bg: '#fafaf8', text: '#000' }
     ];
-    renderTiers();
+    fullRenderTiers();
+    // 重置背景为默认
+    applyBackground({ name: '默认深色', type: 'color', value: '#1a1a2e' }, true);
   });
+
   document.getElementById('fullscreenBtn').addEventListener('click', () => {
     if (!document.fullscreenElement) {
       document.documentElement.requestFullscreen();
@@ -483,8 +692,15 @@ function applyBackground(bg) {
       document.exitFullscreen();
     }
   });
+
   document.getElementById('bgBtn').addEventListener('click', openBgPicker);
   exportBtn.addEventListener('click', exportImage);
+
+  // 保存 / 导入 / 导出按钮
+  saveBtn.addEventListener('click', manualSave);
+  exportSaveBtn.addEventListener('click', exportProgressFile);
+  importSaveBtn.addEventListener('click', () => importFileInput.click());
+  importFileInput.addEventListener('change', handleImportFile);
 
   document.getElementById('confirmPickBtn').addEventListener('click', confirmPick);
   document.getElementById('cancelPickBtn').addEventListener('click', () => {
@@ -506,11 +722,25 @@ function applyBackground(bg) {
   document.getElementById('cancelBgBtn').addEventListener('click', () => bgModal.hidden = true);
   document.querySelector('#bgModal .modal-backdrop').addEventListener('click', () => bgModal.hidden = true);
 
-  // ---------- 页面启动 ----------
+  document.querySelectorAll('.view-toggle button').forEach(btn => {
+    btn.addEventListener('click', () => setBgViewSize(btn.dataset.size));
+  });
+
+  // ========== 启动 ==========
   async function init() {
     await loadCharacterData();
+    await loadBgList();
     initFilterButtons();
-    renderTiers();
+
+    // 尝试从 localStorage 恢复进度
+    const restored = loadFromLocal();
+    if (!restored) {
+      // 没有存档就用默认
+      fullRenderTiers();
+      applyBackground({ name: '默认深色', type: 'color', value: '#1a1a2e' }, false);
+    }
+    // 恢复后或默认后，做一次自动保存（覆盖旧的）
+    autoSave();
   }
   init();
 });

@@ -1,3 +1,4 @@
+<!-- index.html -->
 <!DOCTYPE html>
 <html lang="zh">
 <head>
@@ -8,15 +9,19 @@
 </head>
 <body>
   <div id="app">
-    <div class="toolbar">
-      <button id="resetBtn" class="btn-glass">重置</button>
-      <button id="addTierBtn" class="btn-glass">添加等级行</button>
-      <button id="fullscreenBtn" class="btn-glass">全屏</button>
-      <button id="bgBtn" class="btn-glass">🎨 选择背景</button>
-      <button id="exportBtn" class="btn-glass">📷 导出图片</button>
-    </div>
+<div class="toolbar">
+  <button id="resetBtn" class="btn-glass">重置</button>
+  <button id="addTierBtn" class="btn-glass">添加等级行</button>
+  <button id="fullscreenBtn" class="btn-glass">全屏</button>
+  <button id="bgBtn" class="btn-glass">🎨 选择背景</button>
+  <button id="exportBtn" class="btn-glass">📷 导出图片</button>
+  <!-- 👇 新增按钮 -->
+  <button id="saveBtn" class="btn-glass">💾 保存进度</button>
+  <button id="exportSaveBtn" class="btn-glass">📤 导出进度文件</button>
+  <button id="importSaveBtn" class="btn-glass">📥 导入进度文件</button>
+  <input type="file" id="importFile" accept=".json" style="display:none">
+</div>
 
-    <!-- 操作提示 -->
     <div class="tips">
       💡 点击等级行名称可编辑样式；点击等级行空白区域可添加角色；建议使用电脑操作以获得最佳体验。
     </div>
@@ -43,7 +48,6 @@
       <div class="modal-backdrop"></div>
       <div class="modal-content picker-modal">
         <h3>选择角色</h3>
-        <!-- 筛选区域 -->
         <div class="filter-bar">
           <span class="filter-label">筛选：</span>
           <div id="filterStars" class="filter-group"></div>
@@ -64,7 +68,13 @@
       <div class="modal-backdrop"></div>
       <div class="modal-content picker-modal">
         <h3>选择背景</h3>
-        <div id="bgGrid" class="image-grid"></div>
+        <!-- 视图大小切换按钮 -->
+        <div class="view-toggle">
+          <button data-size="small">小</button>
+          <button data-size="medium" class="active">中</button>
+          <button data-size="large">大</button>
+        </div>
+        <div id="bgGrid" class="image-grid view-medium"></div>
         <div class="modal-buttons">
           <button id="resetBgBtn" class="btn-glass">恢复默认</button>
           <button id="cancelBgBtn" class="btn-glass">取消</button>
