@@ -1,182 +1,94 @@
 document.addEventListener('DOMContentLoaded', () => {
   // ===========================
-  // 角色卡片文件名列表（请根据实际文件完整补充）
-const CARD_FILES = [
-  'HeadSquare_10001_1_CardHeadSquare_fui_atlas0_1.png.png',
-  'HeadSquare_10002_1_CardHeadSquare_fui_atlas0_2.png.png',
-  'HeadSquare_10003_1_CardHeadSquare_fui_atlas0.png.png',
-  'HeadSquare_10004_1_CardHeadSquare_fui_atlas0_1.png.png',
-  'HeadSquare_10005_1_CardHeadSquare_fui_atlas0_2.png.png',
-  'HeadSquare_10006_1_CardHeadSquare_fui_atlas0_1.png.png',
-  'HeadSquare_10007_1_CardHeadSquare_fui_atlas0_1.png.png',
-  'HeadSquare_10008_1_CardHeadSquare_fui_atlas0_2.png.png',
-  'HeadSquare_10009_1_CardHeadSquare_fui_atlas0_2.png.png',
-  'HeadSquare_10010_1_CardHeadSquare_fui_atlas0_1.png.png',
-  'HeadSquare_10011_1_CardHeadSquare_fui_atlas0_1.png.png',
-  'HeadSquare_10013_1_CardHeadSquare_fui_atlas0_1.png.png',
-  'HeadSquare_10014_1_CardHeadSquare_fui_atlas0_1.png.png',
-  'HeadSquare_10015_1_CardHeadSquare_fui_atlas0_1.png.png',
-  'HeadSquare_10016_1_CardHeadSquare_fui_atlas0_2.png.png',
-  'HeadSquare_10017_1_CardHeadSquare_fui_atlas0_2.png.png',
-  'HeadSquare_10018_1_CardHeadSquare_fui_atlas0_1.png.png',
-  'HeadSquare_10019_1_CardHeadSquare_fui_atlas0_2.png.png',
-  'HeadSquare_10020_1_CardHeadSquare_fui_atlas0_2.png.png',
-  'HeadSquare_10021_1_CardHeadSquare_fui_atlas0_2.png.png',
-  'HeadSquare_10022_1_CardHeadSquare_fui_atlas0_2.png.png',
-  'HeadSquare_10024_1_CardHeadSquare_fui_atlas0_2.png.png',
-  'HeadSquare_10025_1_CardHeadSquare_fui_atlas0_2.png.png',
-  'HeadSquare_10026_1_CardHeadSquare_fui_atlas0_2.png.png',
-  'HeadSquare_10027_1_CardHeadSquare_fui_atlas0_2.png.png',
-  'HeadSquare_10028_1_CardHeadSquare_fui_atlas0.png.png',
-  'HeadSquare_10029_1_CardHeadSquare_fui_atlas0_1.png.png',
-  'HeadSquare_10030_1_CardHeadSquare_fui_atlas0_1.png.png',
-  'HeadSquare_10031_1_CardHeadSquare_fui_atlas0_1.png.png',
-  'HeadSquare_10032_1_CardHeadSquare_fui_atlas0_1.png.png',
-  'HeadSquare_10033_1_CardHeadSquare_fui_atlas0_1.png.png',
-  'HeadSquare_10034_1_CardHeadSquare_fui_atlas0_2.png.png',
-  'HeadSquare_10035_1_CardHeadSquare_fui_atlas0_1.png.png',
-  'HeadSquare_10036_1_CardHeadSquare_fui_atlas0_1.png.png',
-  'HeadSquare_10037_1_CardHeadSquare_fui_atlas0_2.png.png',
-  'HeadSquare_10038_1_CardHeadSquare_fui_atlas0_2.png.png',
-  'HeadSquare_10039_1_CardHeadSquare_fui_atlas0_2.png.png',
-  'HeadSquare_10040_1_CardHeadSquare_fui_atlas0_1.png.png',
-  'HeadSquare_10041_1_CardHeadSquare_fui_atlas0_1.png.png',
-  'HeadSquare_10042_1_CardHeadSquare_fui_atlas0_1.png.png',
-  'HeadSquare_10043_1_CardHeadSquare_fui_atlas0_1.png.png',
-  'HeadSquare_10044_1_CardHeadSquare_fui_atlas0.png.png',
-  'HeadSquare_10045_1_CardHeadSquare_fui_atlas0_1.png.png',
-  'HeadSquare_10046_1_CardHeadSquare_fui_atlas0_1.png.png',
-  'HeadSquare_10047_1_CardHeadSquare_fui_atlas0_1.png.png',
-  'HeadSquare_10048_1_CardHeadSquare_fui_atlas0_1.png.png',
-  'HeadSquare_10049_1_CardHeadSquare_fui_atlas0_1.png.png',
-  'HeadSquare_10050_1_CardHeadSquare_fui_atlas0_1.png.png',
-  'HeadSquare_10051_1_CardHeadSquare_fui_atlas0_2.png.png',
-  'HeadSquare_10052_1_CardHeadSquare_fui_atlas0_1.png.png',
-  'HeadSquare_10053_1_CardHeadSquare_fui_atlas0_1.png.png',
-  'HeadSquare_10054_1_CardHeadSquare_fui_atlas0_1.png.png',
-  'HeadSquare_10055_1_CardHeadSquare_fui_atlas0_2.png.png',
-  'HeadSquare_10056_1_CardHeadSquare_fui_atlas0_2.png.png',
-  'HeadSquare_10059_1_CardHeadSquare_fui_atlas0_1.png.png',
-  'HeadSquare_10060_1_CardHeadSquare_fui_atlas0.png.png',
-  'HeadSquare_10061_1_CardHeadSquare_fui_atlas0_2.png.png',
-  'HeadSquare_10062_1_CardHeadSquare_fui_atlas0_2.png.png',
-  'HeadSquare_10064_1_CardHeadSquare_fui_atlas0.png.png',
-  'HeadSquare_10067_1_CardHeadSquare_fui_atlas0.png.png',
-  'HeadSquare_10069_1_CardHeadSquare_fui_atlas0_2.png.png',
-  'HeadSquare_10070_1_CardHeadSquare_fui_atlas0_2.png.png',
-  'HeadSquare_10071_1_CardHeadSquare_fui_atlas0.png.png',
-  'HeadSquare_10073_1_CardHeadSquare_fui_atlas0_1.png.png',
-  'HeadSquare_10074_1_CardHeadSquare_fui_atlas0.png.png',
-  'HeadSquare_10075_1_CardHeadSquare_fui_atlas0_1.png.png',
-  'HeadSquare_10076_1_CardHeadSquare_fui_atlas0.png.png',
-  'HeadSquare_10077_1_CardHeadSquare_fui_atlas0_1.png.png',
-  'HeadSquare_10078_1_CardHeadSquare_fui_atlas0_1.png.png',
-  'HeadSquare_10080_1_CardHeadSquare_fui_atlas0_2.png.png',
-  'HeadSquare_10082_1_CardHeadSquare_fui_atlas0_2.png.png',
-  'HeadSquare_10083_1_CardHeadSquare_fui_atlas0.png.png',
-  'HeadSquare_10086_1_CardHeadSquare_fui_atlas0.png.png',
-  'HeadSquare_10089_1_CardHeadSquare_fui_atlas0.png.png',
-  'HeadSquare_10091_1_CardHeadSquare_fui_atlas0.png.png',
-  'HeadSquare_10093_1_CardHeadSquare_fui_atlas0_1.png.png',
-  'HeadSquare_10094_1_CardHeadSquare_fui_atlas0_1.png.png',
-  'HeadSquare_10095_1_CardHeadSquare_fui_atlas0_2.png.png',
-  'HeadSquare_10096_1_CardHeadSquare_fui_atlas0.png.png',
-  'HeadSquare_10097_1_CardHeadSquare_fui_atlas0.png.png',
-  'HeadSquare_10098_1_CardHeadSquare_fui_atlas0.png.png',
-  'HeadSquare_10099_1_CardHeadSquare_fui_atlas0.png.png',
-  'HeadSquare_10100_1_CardHeadSquare_fui_atlas0.png.png',
-  'HeadSquare_10101_1_CardHeadSquare_fui_atlas0.png.png',
-  'HeadSquare_10102_1_CardHeadSquare_fui_atlas0.png.png',
-  'HeadSquare_10103_1_CardHeadSquare_fui_atlas0.png.png',
-  'HeadSquare_10104_1_CardHeadSquare_fui_atlas0.png.png',
-  'HeadSquare_10105_1_CardHeadSquare_fui_atlas0.png.png',
-  'HeadSquare_10106_1_CardHeadSquare_fui_atlas0_1.png.png',
-  'HeadSquare_10107_1_CardHeadSquare_fui_atlas0_1.png.png',
-  'HeadSquare_10108_1_CardHeadSquare_fui_atlas0_1.png.png',
-  'HeadSquare_10109_1_CardHeadSquare_fui_atlas0_1.png.png',
-  'HeadSquare_10110_1_CardHeadSquare_fui_atlas0.png.png',
-  'HeadSquare_10111_1_CardHeadSquare_fui_atlas0.png.png',
-  'HeadSquare_10112_1_CardHeadSquare_fui_atlas0.png.png',
-  'HeadSquare_10113_1_CardHeadSquare_fui_atlas0.png.png',
-  'HeadSquare_10114_1_CardHeadSquare_fui_atlas0_1.png.png',
-  'HeadSquare_10115_1_CardHeadSquare_fui_atlas0.png.png',
-];
+  // 远程配置（热更新核心）
+  const REMOTE_DATA_URL = 'https://xl-cardlist-tool.2609113802.workers.dev/assets/characters.json';
+  const REMOTE_IMG_BASE = 'https://xl-cardlist-tool.2609113802.workers.dev/assets/card/';
+  const LOCAL_IMG_BASE = './assets/card/';
+  let IMG_BASE = LOCAL_IMG_BASE;          // 默认本地，远程成功后自动切换
 
-  // 背景图片列表
-const BUILTIN_BACKGROUNDS = [
-  { name: '默认深色', type: 'color', value: '#1a1a2e' },
-  { name: 'bg1', type: 'image', file: './assets/bg/eventcovers_00.png' },
-  { name: 'bg2', type: 'image', file: './assets/bg/eventcovers_0028_bg2.png' },
-  { name: 'bg3', type: 'image', file: './assets/bg/eventcovers_0031.png' },
-  { name: 'bg4', type: 'image', file: './assets/bg/frame_250725173524_3a228f_100.png' },
-  { name: 'bg5', type: 'image', file: './assets/bg/frame_250815140809_0d3524_100.png' },
-  { name: 'bg6', type: 'image', file: './assets/bg/frame_251017103301_1c86e6_100.png' },
-  { name: 'bg7', type: 'image', file: './assets/bg/frame_251130230234_bf92ff_80.png' },
-  { name: 'bg8', type: 'image', file: './assets/bg/home2.mp4_000005.400.png' },
-  { name: 'bg9', type: 'image', file: './assets/bg/home2.mp4_000037.298.png' },
-  { name: 'bg10', type: 'image', file: './assets/bg/home2.mp4_000041.210.png' },
-  { name: 'bg11', type: 'image', file: './assets/bg/home2.mp4_000042.544.png' },
-  { name: 'bg12', type: 'image', file: './assets/bg/home2.mp4_000046.040.png' },
-  { name: 'bg13', type: 'image', file: './assets/bg/home2.mp4_000051.381.png' },
-  { name: 'bg14', type: 'image', file: './assets/bg/home2.mp4_000055.389.png' },
-  { name: 'bg15', type: 'image', file: './assets/bg/home2.mp4_000100.933.png' },
-  { name: 'bg16', type: 'image', file: './assets/bg/home2.mp4_000105.265.png' }
-];
+  // 本地兜底数据（ZIP 中包含完整的 assets/characters.json 即可，此处为保险最小集）
+  const FALLBACK_DATA = [
+    { id: 10000101, name: '菲尼斯', star: 1, profession: '异刃', element: '火属性', img: 'HeadSquare_10000101.png' },
+    { id: 10000102, name: '露露', star: 2, profession: '坚甲', element: '火属性', img: 'HeadSquare_10000102.png' }
+  ];
 
-  // 从文件名提取 CSV 对应 ID
-  function getCsvIdFromFilename(filename) {
-    const match = filename.match(/_(\d+)_/);
-    if (match) {
-      const idStr = match[1];
-      const lastThree = idStr.slice(-3);
-      return 10000100 + parseInt(lastThree, 10);
+  let characterMap = {};   // id -> 完整角色信息
+  let cardItems = [];      // 最终用于显示的卡片列表
+
+  // ---------- 加载角色数据 ----------
+  async function loadCharacterData() {
+    let data = null;
+
+    // 1️⃣ 优先从远程加载
+    try {
+      const resp = await fetch(REMOTE_DATA_URL + '?t=' + Date.now());
+      if (resp.ok) {
+        data = await resp.json();
+        IMG_BASE = REMOTE_IMG_BASE;
+        console.log('✅ 远程数据加载成功，使用远程图片');
+      }
+    } catch (e) {
+      console.warn('⚠️ 远程数据加载失败，尝试本地 JSON', e);
     }
-    return null;
-  }
 
-  // 全局角色信息
-  let characterMap = {};
-
-  // 构建卡片数据
-  function buildCardItems() {
-    return CARD_FILES.map(file => {
-      const csvId = getCsvIdFromFilename(file);
-      const info = characterMap[csvId] || {};
-      return {
-        file: './assets/card/' + file,
-        id: csvId,
-        name: info.name || '未知',
-        star: info.star || 0,
-        profession: info.profession || '',
-        element: info.element || ''
-      };
-    });
-  }
-
-  // 加载 CSV
-  function loadCSV() {
-    return fetch('./assets/characters.csv')
-      .then(res => res.text())
-      .then(text => {
-        const lines = text.trim().split('\n');
-        for (let i = 1; i < lines.length; i++) {
-          const line = lines[i];
-          if (!line) continue;
-          const cols = line.split(',');
-          const id = parseInt(cols[0], 10);
-          if (!id) continue;
-          characterMap[id] = {
-            name: cols[1] || '未知',
-            star: parseInt(cols[2], 10) || 0,
-            profession: cols[3] || '',
-            element: cols[4] || ''
-          };
+    // 2️⃣ 远程失败，尝试加载 ZIP 内的本地 JSON
+    if (!data) {
+      try {
+        const resp = await fetch('./assets/characters.json');
+        if (resp.ok) {
+          data = await resp.json();
+          IMG_BASE = LOCAL_IMG_BASE;
+          console.log('📁 使用本地兜底数据');
         }
-      })
-      .catch(() => console.warn('CSV 加载失败'));
+      } catch (e2) {
+        console.warn('⚠️ 本地 JSON 加载失败，使用内置最小数据集', e2);
+        data = FALLBACK_DATA;
+        IMG_BASE = LOCAL_IMG_BASE;
+      }
+    }
+
+    // 构建 characterMap 和 cardItems
+    characterMap = {};
+    data.forEach(ch => {
+      characterMap[ch.id] = ch;
+    });
+
+    cardItems = data.map(ch => ({
+      id: ch.id,
+      file: IMG_BASE + ch.img,   // 完整图片路径
+      name: ch.name,
+      star: ch.star,
+      profession: ch.profession,
+      element: ch.element || ''
+    }));
+
+    console.log(`共加载 ${cardItems.length} 个角色`);
   }
 
   // ===========================
+  // 背景图片列表（本地图片，按需修改即可）
+  const BUILTIN_BACKGROUNDS = [
+    { name: '默认深色', type: 'color', value: '#1a1a2e' },
+    { name: 'bg1', type: 'image', file: './assets/bg/eventcovers_00.png' },
+    { name: 'bg2', type: 'image', file: './assets/bg/eventcovers_0028_bg2.png' },
+    { name: 'bg3', type: 'image', file: './assets/bg/eventcovers_0031.png' },
+    { name: 'bg4', type: 'image', file: './assets/bg/frame_250725173524_3a228f_100.png' },
+    { name: 'bg5', type: 'image', file: './assets/bg/frame_250815140809_0d3524_100.png' },
+    { name: 'bg6', type: 'image', file: './assets/bg/frame_251017103301_1c86e6_100.png' },
+    { name: 'bg7', type: 'image', file: './assets/bg/frame_251130230234_bf92ff_80.png' },
+    { name: 'bg8', type: 'image', file: './assets/bg/home2.mp4_000005.400.png' },
+    { name: 'bg9', type: 'image', file: './assets/bg/home2.mp4_000037.298.png' },
+    { name: 'bg10', type: 'image', file: './assets/bg/home2.mp4_000041.210.png' },
+    { name: 'bg11', type: 'image', file: './assets/bg/home2.mp4_000042.544.png' },
+    { name: 'bg12', type: 'image', file: './assets/bg/home2.mp4_000046.040.png' },
+    { name: 'bg13', type: 'image', file: './assets/bg/home2.mp4_000051.381.png' },
+    { name: 'bg14', type: 'image', file: './assets/bg/home2.mp4_000055.389.png' },
+    { name: 'bg15', type: 'image', file: './assets/bg/home2.mp4_000100.933.png' },
+    { name: 'bg16', type: 'image', file: './assets/bg/home2.mp4_000105.265.png' }
+  ];
+
+  // ===========================
+  // 以下代码保持不变（仅因依赖 cardItems，确保在 init() 中才渲染）
 
   let tiers = [
     { name: '夯', bg: '#e33b2c', text: '#000' },
@@ -196,7 +108,6 @@ const BUILTIN_BACKGROUNDS = [
 
   let currentTierIndex = -1;
   let selectedImages = new Set();
-  let cardItems = [];
 
   // 筛选条件（多选集合）
   let currentFilter = {
@@ -204,11 +115,6 @@ const BUILTIN_BACKGROUNDS = [
     professions: new Set(),
     elements: new Set()
   };
-
-  // 加载 CSV 后初始化卡片数据
-  loadCSV().then(() => {
-    cardItems = buildCardItems();
-  });
 
   // ---------- 渲染等级行 ----------
   function renderTiers() {
@@ -269,9 +175,6 @@ const BUILTIN_BACKGROUNDS = [
 
   // ---------- 图片选择弹窗 ----------
   function openPicker(tierIndex) {
-    if (cardItems.length === 0) {
-      cardItems = buildCardItems();
-    }
     currentTierIndex = tierIndex;
     selectedImages.clear();
     renderImageGrid();
@@ -605,9 +508,11 @@ function exportImage() {
   document.getElementById('cancelBgBtn').addEventListener('click', () => bgModal.hidden = true);
   document.querySelector('#bgModal .modal-backdrop').addEventListener('click', () => bgModal.hidden = true);
 
-  // 初始化筛选按钮
-  initFilterButtons();
-
-  // 启动
-  renderTiers();
+  // ---------- 启动 ----------
+  async function init() {
+    await loadCharacterData();      // 先加载数据
+    initFilterButtons();
+    renderTiers();
+  }
+  init();
 });
