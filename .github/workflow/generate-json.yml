@@ -3,7 +3,7 @@ name: Auto Generate characters.json
 on:
   push:
     paths:
-      - 'characters.csv'   # 只有 CSV 变化才触发
+      - 'assets/characters.csv'   # 只有 CSV 变化才触发
   workflow_dispatch:       # 允许手动触发
 
 jobs:
