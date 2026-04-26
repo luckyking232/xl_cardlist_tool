@@ -3,13 +3,24 @@ document.addEventListener('DOMContentLoaded', () => {
   // 远程配置（热更新核心）
   const REMOTE_DATA_URL = 'https://xl-cardlist-tool.2609113802.workers.dev/assets/characters.json';
   const REMOTE_IMG_BASE = 'https://xl-cardlist-tool.2609113802.workers.dev/assets/card/';
+  const REMOTE_BG_LIST_URL = 'https://xl-cardlist-tool.2609113802.workers.dev/assets/bg_list.json';
   const LOCAL_IMG_BASE = './assets/card/';
+  const LOCAL_BG_LIST_URL = './assets/bg_list.json';
+  const REMOTE_BG_BASE = 'https://xl-cardlist-tool.2609113802.workers.dev/assets/bg/';
+  const LOCAL_BG_BASE = './assets/bg/';
   let IMG_BASE = LOCAL_IMG_BASE;          // 默认本地，远程成功后自动切换
+  let BG_BASE = LOCAL_BG_BASE;
 
   // 本地兜底数据（ZIP 中包含完整的 assets/characters.json 即可，此处为保险最小集）
   const FALLBACK_DATA = [
     { id: 10000101, name: '菲尼斯', star: 1, profession: '异刃', element: '火属性', img: 'HeadSquare_10000101.png' },
     { id: 10000102, name: '露露', star: 2, profession: '坚甲', element: '火属性', img: 'HeadSquare_10000102.png' }
+  ];
+
+  // 内置最少背景兜底（极端情况）
+  const FALLBACK_BG_LIST = [
+    { name: '默认深色', type: 'color', value: '#1a1a2e' },
+    { name: '内置背景1', type: 'image', file: 'eventcovers_00.png' }
   ];
 
   let characterMap = {};   // id -> 完整角色信息
@@ -65,27 +76,35 @@ document.addEventListener('DOMContentLoaded', () => {
     console.log(`共加载 ${cardItems.length} 个角色`);
   }
 
-  // ===========================
-  // 背景图片列表（本地图片，按需修改即可）
-  const BUILTIN_BACKGROUNDS = [
-    { name: '默认深色', type: 'color', value: '#1a1a2e' },
-    { name: 'bg1', type: 'image', file: './assets/bg/eventcovers_00.png' },
-    { name: 'bg2', type: 'image', file: './assets/bg/eventcovers_0028_bg2.png' },
-    { name: 'bg3', type: 'image', file: './assets/bg/eventcovers_0031.png' },
-    { name: 'bg4', type: 'image', file: './assets/bg/frame_250725173524_3a228f_100.png' },
-    { name: 'bg5', type: 'image', file: './assets/bg/frame_250815140809_0d3524_100.png' },
-    { name: 'bg6', type: 'image', file: './assets/bg/frame_251017103301_1c86e6_100.png' },
-    { name: 'bg7', type: 'image', file: './assets/bg/frame_251130230234_bf92ff_80.png' },
-    { name: 'bg8', type: 'image', file: './assets/bg/home2.mp4_000005.400.png' },
-    { name: 'bg9', type: 'image', file: './assets/bg/home2.mp4_000037.298.png' },
-    { name: 'bg10', type: 'image', file: './assets/bg/home2.mp4_000041.210.png' },
-    { name: 'bg11', type: 'image', file: './assets/bg/home2.mp4_000042.544.png' },
-    { name: 'bg12', type: 'image', file: './assets/bg/home2.mp4_000046.040.png' },
-    { name: 'bg13', type: 'image', file: './assets/bg/home2.mp4_000051.381.png' },
-    { name: 'bg14', type: 'image', file: './assets/bg/home2.mp4_000055.389.png' },
-    { name: 'bg15', type: 'image', file: './assets/bg/home2.mp4_000100.933.png' },
-    { name: 'bg16', type: 'image', file: './assets/bg/home2.mp4_000105.265.png' }
-  ];
+  // ---------- 加载背景列表 ----------
+  let bgListCache = null;
+
+  async function loadBgList() {
+    // 1️⃣ 远程优先
+    try {
+      const resp = await fetch(REMOTE_BG_LIST_URL + '?t=' + Date.now());
+      if (resp.ok) {
+        const list = await resp.json();
+        BG_BASE = REMOTE_BG_BASE;
+        console.log('✅ 远程背景列表加载成功，共', list.length, '个');
+        return list;
+      }
+    } catch (e) { console.warn('远程背景列表加载失败', e); }
+
+    // 2️⃣ 本地兜底
+    try {
+      const resp = await fetch(LOCAL_BG_LIST_URL + '?t=' + Date.now());
+      if (resp.ok) {
+        const list = await resp.json();
+        BG_BASE = LOCAL_BG_BASE;
+        console.log('📁 使用本地背景列表');
+        return list;
+      }
+    } catch (e) { console.warn('本地背景列表加载失败', e); }
+
+    BG_BASE = LOCAL_BG_BASE;
+    return FALLBACK_BG_LIST;  // 极端情况兜底
+  }
 
   // ===========================
   // 以下代码保持不变（仅因依赖 cardItems，确保在 init() 中才渲染）
