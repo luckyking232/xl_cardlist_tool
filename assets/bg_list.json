@@ -1,0 +1,132 @@
+[
+  {
+    "name": "默认深色",
+    "type": "color",
+    "value": "#1a1a2e"
+  },
+  {
+    "name": "bg1",
+    "type": "image",
+    "file": "eventcovers_00.png"
+  },
+  {
+    "name": "bg2",
+    "type": "image",
+    "file": "eventcovers_0028_bg2.png"
+  },
+  {
+    "name": "bg3",
+    "type": "image",
+    "file": "eventcovers_0031.png"
+  },
+  {
+    "name": "bg4",
+    "type": "image",
+    "file": "frame_250725173524_3a228f_100.png"
+  },
+  {
+    "name": "bg5",
+    "type": "image",
+    "file": "frame_250815140809_0d3524_100.png"
+  },
+  {
+    "name": "bg6",
+    "type": "image",
+    "file": "frame_251017103301_1c86e6_100.png"
+  },
+  {
+    "name": "bg7",
+    "type": "image",
+    "file": "frame_251130230234_bf92ff_80.png"
+  },
+  {
+    "name": "bg8",
+    "type": "image",
+    "file": "frame_251222113039_f43714_80.png"
+  },
+  {
+    "name": "bg9",
+    "type": "image",
+    "file": "frame_260102185006_a41d2b_80.png"
+  },
+  {
+    "name": "bg10",
+    "type": "image",
+    "file": "frame_260102185811_900b76_80.png"
+  },
+  {
+    "name": "bg11",
+    "type": "image",
+    "file": "frame_260102191502_af35ed_80.png"
+  },
+  {
+    "name": "bg12",
+    "type": "image",
+    "file": "frame_260129143007_aedbb7_80.png"
+  },
+  {
+    "name": "bg13",
+    "type": "image",
+    "file": "frame_260129143031_a00494_80.png"
+  },
+  {
+    "name": "bg14",
+    "type": "image",
+    "file": "frame_260129143048_7fc0dd_80.png"
+  },
+  {
+    "name": "bg15",
+    "type": "image",
+    "file": "frame_260129143102_f65415_80.png"
+  },
+  {
+    "name": "bg16",
+    "type": "image",
+    "file": "frame_260130132015_5ba702_80.png"
+  },
+  {
+    "name": "bg17",
+    "type": "image",
+    "file": "home2.mp4_000005.400.png"
+  },
+  {
+    "name": "bg18",
+    "type": "image",
+    "file": "home2.mp4_000037.298.png"
+  },
+  {
+    "name": "bg19",
+    "type": "image",
+    "file": "home2.mp4_000041.210.png"
+  },
+  {
+    "name": "bg20",
+    "type": "image",
+    "file": "home2.mp4_000042.544.png"
+  },
+  {
+    "name": "bg21",
+    "type": "image",
+    "file": "home2.mp4_000046.040.png"
+  },
+  {
+    "name": "bg22",
+    "type": "image",
+    "file": "home2.mp4_000051.381.png"
+  },
+  {
+    "name": "bg23",
+    "type": "image",
+    "file": "home2.mp4_000055.389.png"
+  },
+  {
+    "name": "bg24",
+    "type": "image",
+    "file": "home2.mp4_000100.933.png"
+  },
+  {
+    "name": "bg25",
+    "type": "image",
+    "file": "home2.mp4_000105.265.png"
+  }
+]
